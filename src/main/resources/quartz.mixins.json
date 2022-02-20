@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.leximon.quartz.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "server": [
+    "block.BlockUpdateS2CPacketMixin",
+    "block.ChunkDeltaUpdateS2CPacketMixin",
+    "block.PaletteMixin",
+    "block.ServerPlayerInteractionManagerMixin",
+    "item.PacketByteBufMixin",
+    "miscellaneous.CommandManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1,
+    "maxShiftBy": 5
+  },
+  "overwrites": {
+    "conformVisibility": true,
+    "requireAnnotations": false
+  }
+}

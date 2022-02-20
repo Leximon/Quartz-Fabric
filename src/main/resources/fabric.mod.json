@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "quartz",
+  "version": "${version}",
+
+  "name": "Quartz",
+  "description": "A serverside API",
+  "authors": [
+    "Leximon"
+  ],
+  "contact": {
+
+  },
+
+  "license": "MIT",
+  "icon": "assets/quartz/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "de.leximon.quartz.QuartzInitializer"
+    ]
+  },
+  "mixins": [
+    "quartz.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.18.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
