@@ -100,6 +100,21 @@ public class ExampleBlockEntity extends LootableContainerBlockEntity {
         // particle and damage
         ServerWorld w = (ServerWorld) world;
         Vec3f dirVec = blockState.get(Properties.FACING).getUnitVector();
+        for(int i = 0; i < 5; i++) {
+            final float s = 0.075f;
+            float x = dirVec.getX();
+            float y = dirVec.getY();
+            float z = dirVec.getZ();
+            w.spawnParticles(ParticleTypes.FLAME,
+                    blockPos.getX() + 0.5 + x / 2 + x * Math.random() * 0.3 - x * 0.3,
+                    blockPos.getY() + 0.5 + y / 2 + y * Math.random() * 0.3 - y * 0.3,
+                    blockPos.getZ() + 0.5 + z / 2 + z * Math.random() * 0.3 - z * 0.3,
+                    0,
+                    x == 0 ? (Math.random()*2-1)*s : x,
+                    y == 0 ? (Math.random()*2-1)*s : y,
+                    z == 0 ? (Math.random()*2-1)*s : z, 0.8
+            );
+        }
         int prevI = -1;
         for (float i = 0; i < 15; i += 0.25) {
             float distance = (i / 20f);
@@ -123,12 +138,6 @@ public class ExampleBlockEntity extends LootableContainerBlockEntity {
                 if (!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty())
                     break;
             }
-            w.spawnParticles(ParticleTypes.FLAME,
-                    blockPos.getX() + 0.5 + p.getX(),
-                    blockPos.getY() + 0.5 + p.getY(),
-                    blockPos.getZ() + 0.5 + p.getZ(),
-                    1, 0.4 * distance, 0.4 * distance, 0.4 * distance, 0
-            );
 
         }
     }

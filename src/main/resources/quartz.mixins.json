@@ -4,6 +4,10 @@
   "package": "de.leximon.quartz.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "event.block.BlockItemMixin",
+    "event.block.ServerPlayerInteractionManagerMixin",
+    "event.inventory.ServerPlayNetworkHandlerMixin",
+    "event.player.ServerPlayNetworkHandlerMixin"
   ],
   "server": [
     "block.BlockUpdateS2CPacketMixin",
