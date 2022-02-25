@@ -1,12 +1,16 @@
 package de.leximon.quartz;
 
 import de.leximon.quartz.api.Quartz;
+import de.leximon.quartz.api.event.server.ServerStartedEvent;
+import de.leximon.quartz.api.event.server.ServerStartingEvent;
+import de.leximon.quartz.api.event.server.ServerStoppedEvent;
+import de.leximon.quartz.api.event.server.ServerStoppingEvent;
 import de.leximon.quartz.api.item.QBlockItem;
-import de.leximon.quartz.api.scheduler.Scheduler;
 import de.leximon.quartz.testing.AmogusBlock;
 import de.leximon.quartz.testing.ExampleBlock;
 import de.leximon.quartz.testing.ExampleBlockEntity;
 import de.leximon.quartz.testing.TestListener;
+import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -17,9 +21,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.PlayerManager;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +29,9 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("quartz");
 
-    private static FabricServerAudiences adventure;
+    @Getter private static FabricServerAudiences adventure;
+    @Getter private static MinecraftServer server;
 
-    public static FabricServerAudiences adventure() {
-        if (adventure == null)
-            throw new IllegalStateException("Tried to access Adventure without a running server!");
-        return adventure;
-    }
 
     public static final AmogusBlock AMOGUS_BLOCK = new AmogusBlock(FabricBlockSettings.copyOf(Blocks.REDSTONE_BLOCK));
     public static final ExampleBlock FLAMETHROWER = new ExampleBlock(FabricBlockSettings.copyOf(Blocks.DISPENSER));
@@ -42,8 +39,17 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-        ServerLifecycleEvents.SERVER_STARTING.register(server -> adventure = FabricServerAudiences.of(server));
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> adventure = null);
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> Quartz.callEvent(new ServerStartedEvent(server)));
+        ServerLifecycleEvents.SERVER_STARTING.register(server -> {
+            QuartzInitializer.adventure = FabricServerAudiences.of(server);
+            QuartzInitializer.server = server;
+            Quartz.callEvent(new ServerStartingEvent(server));
+        });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            adventure = null;
+            Quartz.callEvent(new ServerStoppedEvent(server));
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register(server -> Quartz.callEvent(new ServerStoppingEvent(server)));
         ServerTickEvents.START_SERVER_TICK.register(server -> Quartz.getScheduler().tick(server));
 
         Quartz.registerBlock(id("amogus"), AMOGUS_BLOCK);
@@ -54,7 +60,6 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
         Quartz.registerItem(id("amogus"), new QBlockItem(AMOGUS_BLOCK, Items.REDSTONE_BLOCK, Component.text("Suspicious Block")));
 
         Quartz.registerEvents(TestListener.class);
-
 
     }
 

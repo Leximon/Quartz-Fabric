@@ -18,6 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
 
+    /**
+     * BlockPlaceEvent
+     */
     @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private void inject(ItemPlacementContext context, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         ServerWorld world = (ServerWorld) context.getWorld();

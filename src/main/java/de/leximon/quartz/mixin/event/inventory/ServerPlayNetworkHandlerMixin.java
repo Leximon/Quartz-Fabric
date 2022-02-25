@@ -16,6 +16,9 @@ public class ServerPlayNetworkHandlerMixin {
 
     @Shadow public ServerPlayerEntity player;
 
+    /**
+     * InventoryClickEvent
+     */
     @Inject(method = "onClickSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;disableSyncing()V", shift = At.Shift.BEFORE), cancellable = true)
     private void inject(ClickSlotC2SPacket packet, CallbackInfo ci) {
         InventoryClickEvent event = new InventoryClickEvent(player, packet.getSlot(), packet.getActionType(), packet.getButton());

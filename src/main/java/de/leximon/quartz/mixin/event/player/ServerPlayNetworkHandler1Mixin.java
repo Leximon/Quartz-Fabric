@@ -22,6 +22,9 @@ public class ServerPlayNetworkHandler1Mixin {
 
     private PlayerInteractEntityEvent event;
 
+    /**
+     * PlayerInteractEntityEvent
+     */
     @Inject(method = "interact", at = @At("HEAD"))
     private void inject(Hand hand, CallbackInfo ci) {
         event = new PlayerInteractEntityEvent(field_28963.player, field_28962, hand);
@@ -30,6 +33,9 @@ public class ServerPlayNetworkHandler1Mixin {
             ci.cancel();
     }
 
+    /**
+     * PlayerInteractAtEntityEvent
+     */
     @Inject(method = "interactAt", at = @At("HEAD"))
     private void inject(Hand hand, Vec3d pos, CallbackInfo ci) {
         event = new PlayerInteractAtEntityEvent(field_28963.player, field_28962, hand, pos);
@@ -38,8 +44,8 @@ public class ServerPlayNetworkHandler1Mixin {
             ci.cancel();
     }
 
-    @Inject(method = "processInteract", at = @At("HEAD"), cancellable = true)
-    private void inject(Hand hand, ServerPlayNetworkHandler.Interaction action, CallbackInfo ci) {
-    }
+//    @Inject(method = "processInteract", at = @At("HEAD"), cancellable = true)
+//    private void inject(Hand hand, ServerPlayNetworkHandler.Interaction action, CallbackInfo ci) {
+//    }
 
 }

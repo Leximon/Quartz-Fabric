@@ -32,7 +32,7 @@ dependencies {
 
     // dependencies
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation include("net.kyori:adventure-platform-fabric:5.0.0")
+    include modImplementation("net.kyori:adventure-platform-fabric:5.0.0")
 
     // testing
     modImplementation files("starlight-1.0.0+fabric.d0a3220.jar")

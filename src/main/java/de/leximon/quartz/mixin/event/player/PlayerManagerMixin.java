@@ -24,6 +24,9 @@ public abstract class PlayerManagerMixin {
 
     @Shadow public abstract void broadcast(Text message, MessageType type, UUID sender);
 
+    /**
+     * PlayerJoinEvent
+     */
     @Redirect(method = "onPlayerConnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V"))
     private void inject(PlayerManager instance, Text message, MessageType type, UUID sender, ClientConnection connection, ServerPlayerEntity player) {
         PlayerJoinEvent event = new PlayerJoinEvent(player, connection, message);
@@ -31,6 +34,9 @@ public abstract class PlayerManagerMixin {
         broadcast(Quartz.adventure().toNative(event.getJoinMessage()), type, sender);
     }
 
+    /**
+     * PlayerLoginEvent
+     */
     @Inject(method = "checkCanJoin", at = @At("RETURN"), cancellable = true)
     private void inject(SocketAddress address, GameProfile profile, CallbackInfoReturnable<Text> cir) {
         PlayerLoginEvent event = new PlayerLoginEvent(address, profile, cir.getReturnValue());

@@ -13,6 +13,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
+import net.minecraft.scoreboard.ServerScoreboard;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -63,12 +65,24 @@ public class Quartz {
         }
     }
 
+    public static ServerScoreboard createNewScoreboard() {
+        return new ServerScoreboard(getServer());
+    }
+
+    public static ServerScoreboard getMainScoreboard() {
+        return getServer().getScoreboard();
+    }
+
     public static FabricServerAudiences adventure() {
-        return QuartzInitializer.adventure();
+        return QuartzInitializer.getAdventure();
     }
 
     public static Scheduler getScheduler() {
         return SCHEDULER;
+    }
+
+    public static MinecraftServer getServer() {
+        return QuartzInitializer.getServer();
     }
 
 }

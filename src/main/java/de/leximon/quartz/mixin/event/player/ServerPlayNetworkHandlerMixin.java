@@ -24,6 +24,9 @@ public class ServerPlayNetworkHandlerMixin {
     @Shadow public ServerPlayerEntity player;
     @Shadow @Final public ClientConnection connection;
 
+    /**
+     * PlayerQuitEvent
+     */
     @Redirect(method = "onDisconnected", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V"))
     private void inject(PlayerManager instance, Text message, MessageType type, UUID sender, Text reason) {
         PlayerQuitEvent event = new PlayerQuitEvent(player, connection, message, reason.toString());
