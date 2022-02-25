@@ -9,14 +9,16 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 @Getter
-public class PlayerJoinEvent extends PlayerEvent {
+public class PlayerQuitEvent extends PlayerEvent {
 
     private final ClientConnection clientConnection;
-    @Setter private Component joinMessage;
+    private final String reason;
+    @Setter private Component quitMessage;
 
-    public PlayerJoinEvent(ServerPlayerEntity player, ClientConnection clientConnection, Text text) {
+    public PlayerQuitEvent(ServerPlayerEntity player, ClientConnection clientConnection, Text quitMessage, String reason) {
         super(player);
         this.clientConnection = clientConnection;
-        this.joinMessage = Quartz.adventure().toAdventure(text);
+        this.reason = reason;
+        this.quitMessage = Quartz.adventure().toAdventure(quitMessage);
     }
 }

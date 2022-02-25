@@ -4,9 +4,6 @@
   "package": "de.leximon.quartz.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "event.block.BlockItemMixin",
-    "event.block.ServerPlayerInteractionManagerMixin",
-    "event.inventory.ServerPlayNetworkHandlerMixin",
     "event.player.ServerPlayNetworkHandlerMixin"
   ],
   "server": [
@@ -14,6 +11,11 @@
     "block.ChunkDeltaUpdateS2CPacketMixin",
     "block.PaletteMixin",
     "block.ServerPlayerInteractionManagerMixin",
+    "event.block.BlockItemMixin",
+    "event.block.ServerPlayerInteractionManagerMixin",
+    "event.inventory.ServerPlayNetworkHandlerMixin",
+    "event.player.PlayerManagerMixin",
+    "event.player.ServerPlayNetworkHandler1Mixin",
     "item.PacketByteBufMixin",
     "miscellaneous.CommandManagerMixin"
   ],

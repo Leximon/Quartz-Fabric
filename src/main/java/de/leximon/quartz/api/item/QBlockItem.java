@@ -12,6 +12,10 @@ public class QBlockItem extends BlockItem implements ServersideItem {
     private final Item item;
     private final Component name;
 
+    public <B extends Block & ServersideBlock> QBlockItem(B block, Item item) {
+        this(block, item, null);
+    }
+
     public <B extends Block & ServersideBlock> QBlockItem(B block, Item item, Component name) {
         this(block, item, new Item.Settings()
                 .group(item.getGroup())
