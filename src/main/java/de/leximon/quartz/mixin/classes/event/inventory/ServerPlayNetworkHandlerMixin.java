@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.event.inventory;
+package de.leximon.quartz.mixin.classes.event.inventory;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.event.inventory.InventoryClickEvent;

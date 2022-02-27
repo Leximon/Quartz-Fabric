@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.miscellaneous;
+package de.leximon.quartz.mixin.classes.miscellaneous;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;

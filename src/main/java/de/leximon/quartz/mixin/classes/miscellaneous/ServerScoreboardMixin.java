@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.miscellaneous;
+package de.leximon.quartz.mixin.classes.miscellaneous;
 
 import de.leximon.quartz.api.entity.PlayerUtil;
 import net.minecraft.network.Packet;

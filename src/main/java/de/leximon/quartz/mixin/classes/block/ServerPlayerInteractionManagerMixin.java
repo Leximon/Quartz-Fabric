@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.block;
+package de.leximon.quartz.mixin.classes.block;
 
 import de.leximon.quartz.api.block.ServersideBlock;
 import net.minecraft.block.BlockState;

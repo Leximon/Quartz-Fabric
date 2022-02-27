@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 public class QBlockItem extends BlockItem implements ServersideItem {
@@ -29,12 +30,12 @@ public class QBlockItem extends BlockItem implements ServersideItem {
     }
 
     @Override
-    public Item getDisplayItem() {
+    public Item getDisplayItem(ServerPlayerEntity player) {
         return item;
     }
 
     @Override
-    public Component getDisplayName() {
+    public Component getDisplayName(ServerPlayerEntity player) {
         return name;
     }
 }

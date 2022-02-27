@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.event.player;
+package de.leximon.quartz.mixin.classes.event.player;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.event.player.PlayerInteractAtEntityEvent;

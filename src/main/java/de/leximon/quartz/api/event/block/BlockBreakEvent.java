@@ -19,6 +19,7 @@ public class BlockBreakEvent extends BlockEvent implements Cancellable, PlayerIn
     public BlockBreakEvent(ServerPlayerEntity player, ServerWorld world, BlockState blockState, BlockEntity blockEntity, BlockPos pos) {
         super(new BlockData(world, pos, blockState, blockEntity));
         this.player = player;
+
     }
 
     @Override

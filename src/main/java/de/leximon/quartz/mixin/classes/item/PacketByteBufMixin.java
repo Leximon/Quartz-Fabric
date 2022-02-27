@@ -1,11 +1,13 @@
-package de.leximon.quartz.mixin.item;
+package de.leximon.quartz.mixin.classes.item;
 
 import de.leximon.quartz.api.item.ServersideItem;
+import de.leximon.quartz.mixin.implementations.IPacketByteBuf;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.registry.Registry;
@@ -17,23 +19,25 @@ import org.spongepowered.asm.mixin.Shadow;
 import static de.leximon.quartz.QuartzInitializer.LOGGER;
 
 @Mixin(PacketByteBuf.class)
-public abstract class PacketByteBufMixin {
+public abstract class PacketByteBufMixin implements IPacketByteBuf {
 
     @Shadow public abstract ByteBuf writeBoolean(boolean value);
-
     @Shadow public abstract PacketByteBuf writeVarInt(int value);
-
     @Shadow public abstract ByteBuf writeByte(int value);
-
     @Shadow public abstract PacketByteBuf writeNbt(@Nullable NbtCompound compound);
-
     @Shadow public abstract boolean readBoolean();
-
     @Shadow public abstract int readVarInt();
-
     @Shadow public abstract byte readByte();
-
     @Shadow public abstract @Nullable NbtCompound readNbt();
+
+    @Shadow public abstract ByteBuf discardReadBytes();
+
+    private ServerPlayerEntity player;
+
+    @Override
+    public void setPlayer(ServerPlayerEntity player) {
+        this.player = player;
+    }
 
     /**
      * @author Leximon
@@ -53,8 +57,8 @@ public abstract class PacketByteBufMixin {
             if (item instanceof ServersideItem qItem) {
                 if(nbtCompound == null)
                     nbtCompound = new NbtCompound();
-                item = qItem.getDisplayItem();
-                qItem.applyDisplayNbtWithId(nbtCompound);
+                item = qItem.getDisplayItem(player);
+                qItem.applyDisplayNbtWithId(nbtCompound, player);
             }
             this.writeBoolean(true);
             this.writeVarInt(Item.getRawId(item));
@@ -90,6 +94,16 @@ public abstract class PacketByteBufMixin {
                 }
             } catch (InvalidIdentifierException e) {
                 LOGGER.warn("Invalid custom id: {}", customIdRaw);
+            }
+        }
+        if(nbt != null && nbt.contains("display", NbtCompound.COMPOUND_TYPE)) {
+            NbtCompound display = nbt.getCompound("display");
+            if(display.contains("hasCustomName", NbtCompound.BYTE_TYPE)) {
+                if(!display.getBoolean("hasCustomName"))
+                    display.remove("Name");
+                display.remove("hasCustomName");
+                if(display.isEmpty())
+                    nbt.remove("display");
             }
         }
         ItemStack itemStack = new ItemStack(Item.byRawId(id), count);

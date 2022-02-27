@@ -7,6 +7,7 @@ import de.leximon.quartz.api.event.server.ServerStoppedEvent;
 import de.leximon.quartz.api.event.server.ServerStoppingEvent;
 import de.leximon.quartz.api.item.QBlockItem;
 import de.leximon.quartz.testing.AmogusBlock;
+import de.leximon.quartz.testing.AmogusBlockItem;
 import de.leximon.quartz.testing.ExampleBlock;
 import de.leximon.quartz.testing.ExampleBlockEntity;
 import de.leximon.quartz.testing.TestListener;
@@ -52,14 +53,14 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> Quartz.callEvent(new ServerStoppingEvent(server)));
         ServerTickEvents.START_SERVER_TICK.register(server -> Quartz.getScheduler().tick(server));
 
-/*        Quartz.registerBlock(id("amogus"), AMOGUS_BLOCK);
-        Quartz.registerBlock(id("flamethrower"), FLAMETHROWER);
-        EXAMPLE_BLOCK_ENTITY = Quartz.registerBlockEntity(id("flamethrower"), ExampleBlockEntity::new, FLAMETHROWER);
-
-        Quartz.registerItem(id("flamethrower"), new QBlockItem(FLAMETHROWER, Items.OBSERVER, Component.text("Flamethrower")));
-        Quartz.registerItem(id("amogus"), new QBlockItem(AMOGUS_BLOCK, Items.REDSTONE_BLOCK, Component.text("Suspicious Block")));
-
-        Quartz.registerEvents(TestListener.class);*/
+//        Quartz.registerBlock(id("amogus"), AMOGUS_BLOCK);
+//        Quartz.registerBlock(id("flamethrower"), FLAMETHROWER);
+//        EXAMPLE_BLOCK_ENTITY = Quartz.registerBlockEntity(id("flamethrower"), ExampleBlockEntity::new, FLAMETHROWER);
+//
+//        Quartz.registerItem(id("flamethrower"), new QBlockItem(FLAMETHROWER, Items.OBSERVER, Component.text("Flamethrower")));
+//        Quartz.registerItem(id("amogus"), new AmogusBlockItem(AMOGUS_BLOCK));
+//
+//        Quartz.registerEvents(TestListener.class);
 
     }
 

@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.miscellaneous;
+package de.leximon.quartz.mixin.classes.miscellaneous;
 
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.PlayerManager;

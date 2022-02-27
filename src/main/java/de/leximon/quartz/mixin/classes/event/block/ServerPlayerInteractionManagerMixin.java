@@ -1,4 +1,4 @@
-package de.leximon.quartz.mixin.event.block;
+package de.leximon.quartz.mixin.classes.event.block;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.event.block.BlockBreakEvent;

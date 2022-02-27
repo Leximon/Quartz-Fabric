@@ -1,8 +1,8 @@
-package de.leximon.quartz.mixin.entity;
+package de.leximon.quartz.mixin.classes.entity;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.entity.PlayerUtil;
-import de.leximon.quartz.mixin.miscellaneous.PlayerManagerAccessor;
+import de.leximon.quartz.mixin.classes.miscellaneous.PlayerManagerAccessor;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
