@@ -11,13 +11,15 @@ public class Task {
 
     private final Consumer<Task> consumer;
     private final int period;
+    private final boolean async;
     private int time;
     private boolean running = true;
 
-    public Task(int delay, int period, Consumer<Task> consumer) {
+    public Task(int delay, int period, boolean async, Consumer<Task> consumer) {
         this.consumer = consumer;
         this.period = period;
         this.time = delay;
+        this.async = async;
     }
 
     public void run() {
@@ -32,7 +34,10 @@ public class Task {
         if(!running)
             return;
         if(time <= 0) {
-            run();
+            if(async)
+                new Thread(this::run).start();
+            else
+                run();
             if (period == -1) {
                 running = false;
                 return;

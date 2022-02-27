@@ -18,7 +18,23 @@ public class Scheduler {
     }
 
     public Task runTaskTimer(Consumer<Task> consumer, int delay, int period) {
-        Task task = new Task(delay, period, consumer);
+        Task task = new Task(delay, period, false, consumer);
+        synchronized (tasks) {
+            tasks.add(task);
+        }
+        return task;
+    }
+
+    public Task runTaskAsync(Consumer<Task> consumer) {
+        return runTaskLaterAsync(consumer, 0);
+    }
+
+    public Task runTaskLaterAsync(Consumer<Task> consumer, int delay) {
+        return runTaskTimerAsync(consumer, delay, Task.NO_REPEATING);
+    }
+
+    public Task runTaskTimerAsync(Consumer<Task> consumer, int delay, int period) {
+        Task task = new Task(delay, period, true, consumer);
         synchronized (tasks) {
             tasks.add(task);
         }
