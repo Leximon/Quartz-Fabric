@@ -39,6 +39,11 @@ public abstract class PacketByteBufMixin implements IPacketByteBuf {
         this.player = player;
     }
 
+    @Override
+    public ServerPlayerEntity getPlayer() {
+        return player;
+    }
+
     /**
      * @author Leximon
      * @reason send a custom item

@@ -6,4 +6,6 @@ public interface IPacketByteBuf {
 
     void setPlayer(ServerPlayerEntity player);
 
+    ServerPlayerEntity getPlayer();
+
 }
