@@ -11,7 +11,6 @@ import de.leximon.quartz.api.event.player.PlayerInteractAtEntityEvent;
 import de.leximon.quartz.api.event.player.PlayerJoinEvent;
 import de.leximon.quartz.api.event.player.PlayerLoginEvent;
 import de.leximon.quartz.api.event.player.PlayerQuitEvent;
-import net.kyori.adventure.platform.fabric.impl.mixin.MinecraftServerMixin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -79,7 +78,6 @@ public class TestListener {
             scoreboard.addPlayerToTeam(p.getEntityName(), team);
             scoreboards.put(p.getUuid(), scoreboard);
         }, 20);
-        MinecraftServerMixin
     }
 
     @EventHandler
