@@ -37,7 +37,7 @@ public class ServerScoreboardMixin {
             return;
         }
         for (ServerPlayerEntity player : instance.getPlayerList())
-            if (this.equals(((PlayerUtil) player).getScoreboard()))
+            if (this.equals(((PlayerUtil) player).getDisplayScoreboard()))
                 player.networkHandler.sendPacket(packet);
     }
 
@@ -49,7 +49,7 @@ public class ServerScoreboardMixin {
         if (this.equals(server.getScoreboard()))
             return instance.iterator();
         return instance.stream()
-                .filter(p -> this.equals(((PlayerUtil) p).getScoreboard()))
+                .filter(p -> this.equals(((PlayerUtil) p).getDisplayScoreboard()))
                 .iterator();
     }
 

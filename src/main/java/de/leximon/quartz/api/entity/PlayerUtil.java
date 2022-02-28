@@ -8,9 +8,9 @@ import net.minecraft.screen.ScreenHandler;
 
 public interface PlayerUtil extends ForwardingAudience.Single {
 
-    void setScoreboard(ServerScoreboard scoreboard);
+    void setDisplayScoreboard(ServerScoreboard scoreboard);
 
-    ServerScoreboard getScoreboard();
+    ServerScoreboard getDisplayScoreboard();
 
     <I extends ScreenHandler> I openInventory(Component title, ScreenHandlerFactory<I> factory);
 

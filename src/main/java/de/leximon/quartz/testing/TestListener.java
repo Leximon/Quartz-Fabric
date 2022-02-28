@@ -33,13 +33,13 @@ public class TestListener {
     public static void onBlockBreak(BlockBreakEvent e) {
         ((PlayerUtil) e.getPlayer()).sendActionBar(Component.text("Amongus?"));
         ((PlayerUtil) e.getPlayer()).sendPlayerListFooter(Component.text("IMAGINE A PLACE; WHERE YOU DIE LOL"));
-        ((PlayerUtil) e.getPlayer()).setScoreboard(Quartz.getMainScoreboard());
+        ((PlayerUtil) e.getPlayer()).setDisplayScoreboard(Quartz.getMainScoreboard());
     }
 
     @EventHandler
     public static void onBlockPlace(BlockPlaceEvent e)  {
         var p = (PlayerUtil) e.getPlayer();
-        p.setScoreboard(Quartz.getMainScoreboard().equals(p.getScoreboard()) ? scoreboards.get(e.getPlayer().getUuid()) : Quartz.getMainScoreboard());
+        p.setDisplayScoreboard(Quartz.getMainScoreboard().equals(p.getDisplayScoreboard()) ? scoreboards.get(e.getPlayer().getUuid()) : Quartz.getMainScoreboard());
     }
 
     @EventHandler
@@ -65,7 +65,7 @@ public class TestListener {
 
         Quartz.getScheduler().runTaskLater(task -> {
             var scoreboard = Quartz.createNewScoreboard();
-            ((PlayerUtil) p).setScoreboard(scoreboard);
+            ((PlayerUtil) p).setDisplayScoreboard(scoreboard);
             ScoreboardObjective objective = scoreboard.addObjective("test", ScoreboardCriterion.DUMMY, Quartz.adventure().toNative(Component.text("amongas")), ScoreboardCriterion.RenderType.HEARTS);
             scoreboard.getPlayerScore(UUID.randomUUID().toString(), objective).setScore(new Random().nextInt(0, 10000));
             scoreboard.setObjectiveSlot(1, objective);

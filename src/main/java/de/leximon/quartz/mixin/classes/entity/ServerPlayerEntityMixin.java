@@ -34,7 +34,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     private ServerScoreboard scoreboard;
 
     @Override
-    public void setScoreboard(ServerScoreboard scoreboard) {
+    public void setDisplayScoreboard(ServerScoreboard scoreboard) {
         final MinecraftServer server = Quartz.getServer();
         final PlayerManager playerManager = server.getPlayerManager();
         ((PlayerManagerAccessor) playerManager).quartzSendScoreboard(scoreboard, (ServerPlayerEntity) (Object) this);
@@ -42,7 +42,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     }
 
     @Override
-    public ServerScoreboard getScoreboard() {
+    public ServerScoreboard getDisplayScoreboard() {
         return scoreboard;
     }
 
