@@ -1,6 +1,7 @@
 package de.leximon.quartz.mixin.classes.miscellaneous;
 
 import de.leximon.quartz.api.entity.PlayerUtil;
+import de.leximon.quartz.mixin.implementations.IServerScoreboard;
 import net.minecraft.network.Packet;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
@@ -19,9 +20,11 @@ import java.util.List;
  * if the player has its own scoreboard only send updates to him
  */
 @Mixin(ServerScoreboard.class)
-public class ServerScoreboardMixin {
+public class ServerScoreboardMixin implements IServerScoreboard {
 
     @Shadow @Final private MinecraftServer server;
+
+    private int lineId;
 
     @Redirect(
             method = {
@@ -51,6 +54,16 @@ public class ServerScoreboardMixin {
         return instance.stream()
                 .filter(p -> this.equals(((PlayerUtil) p).getDisplayScoreboard()))
                 .iterator();
+    }
+
+    @Override
+    public int getLineId() {
+        return lineId;
+    }
+
+    @Override
+    public void setLineId(int id) {
+        this.lineId = id;
     }
 
 }
