@@ -21,12 +21,20 @@ public class ModsCommand {
 
     public static void init(CommandDispatcher<ServerCommandSource> d) {
         d.register(CommandManager.literal("mods")
-                .executes(ModsCommand::listMods)
+                .executes(context -> listMods(context, false))
+                .then(CommandManager.literal("all")
+                        .executes(context -> listMods(context, true))
+                )
         );
     }
 
-    private static int listMods(CommandContext<ServerCommandSource> context) {
+    private static int listMods(CommandContext<ServerCommandSource> context, boolean all) {
         Collection<ModContainer> mods = FabricLoader.getInstance().getAllMods();
+        if(!all)
+            mods.removeIf(m -> {
+                String name = m.getMetadata().getName();
+                return name.startsWith("fabric-") || name.startsWith("java") || name.startsWith("minecraft");
+            });
         var b = Component.text()
                 .append(Component.text("Mods ("))
                 .append(Component.text(mods.size()))
