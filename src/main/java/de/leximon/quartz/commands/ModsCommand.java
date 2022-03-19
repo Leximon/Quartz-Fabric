@@ -83,7 +83,7 @@ public class ModsCommand {
             builder.append(converter.apply(v));
             j++;
             if (j != list.size())
-                builder.append(Component.text(",", NamedTextColor.WHITE));
+                builder.append(Component.text(", ", NamedTextColor.WHITE));
         }
     }
 
