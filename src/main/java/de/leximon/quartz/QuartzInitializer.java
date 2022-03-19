@@ -6,8 +6,10 @@ import de.leximon.quartz.api.event.server.ServerStartingEvent;
 import de.leximon.quartz.api.event.server.ServerStoppedEvent;
 import de.leximon.quartz.api.event.server.ServerStoppingEvent;
 import de.leximon.quartz.api.inventory.HandledInventory;
+import de.leximon.quartz.commands.ModsCommand;
 import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.kyori.adventure.platform.fabric.FabricServerAudiences;
@@ -37,6 +39,10 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> Quartz.callEvent(new ServerStoppingEvent(server)));
         ServerTickEvents.START_SERVER_TICK.register(server -> Quartz.getScheduler().tick(server));
+
+        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+            ModsCommand.init(dispatcher);
+        }));
 
         Quartz.registerEvents(HandledInventory.class);
     }
