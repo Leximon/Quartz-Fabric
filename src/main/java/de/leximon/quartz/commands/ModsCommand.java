@@ -46,7 +46,7 @@ public class ModsCommand {
 
             var metadataText = Component.text();
             metadataText.append(Component.text("ID: ", NamedTextColor.WHITE))
-                    .append(Component.text(metadata.getId(), NamedTextColor.BLUE))
+                    .append(Component.text(metadata.getId(), NamedTextColor.GRAY))
                     .append(Component.newline());
             metadataText.append(Component.text("Version: ", NamedTextColor.WHITE))
                     .append(Component.text(metadata.getVersion().getFriendlyString(), NamedTextColor.GRAY))
