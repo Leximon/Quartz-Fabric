@@ -117,6 +117,8 @@ public abstract class HandledInventory implements Inventory, NamedScreenHandlerF
     public static void onInventoryClose(InventoryCloseEvent e) {
         ScreenHandler screenHandler = e.getScreenHandler();
         HandledInventory inv = HANDLED_INVENTORIES.remove(screenHandler);
+        if (inv == null)
+            return;
 
         inv.viewers.remove(e.getPlayer());
         inv.onClose(e);

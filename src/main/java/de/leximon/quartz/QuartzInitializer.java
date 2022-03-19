@@ -7,6 +7,7 @@ import de.leximon.quartz.api.event.server.ServerStoppedEvent;
 import de.leximon.quartz.api.event.server.ServerStoppingEvent;
 import de.leximon.quartz.api.inventory.HandledInventory;
 import de.leximon.quartz.commands.ModsCommand;
+import de.leximon.quartz.commands.TPSCommand;
 import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -42,9 +43,11 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
 
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             ModsCommand.init(dispatcher);
+            TPSCommand.init(dispatcher);
         }));
 
         Quartz.registerEvents(HandledInventory.class);
+        Quartz.registerEvents(TPSCommand.class);
     }
 
     public static Identifier id(String name) {
