@@ -21,7 +21,7 @@ public class ServerPlayNetworkHandlerMixin {
      */
     @Inject(method = "onClickSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;disableSyncing()V", shift = At.Shift.BEFORE), cancellable = true)
     private void inject(ClickSlotC2SPacket packet, CallbackInfo ci) {
-        InventoryClickEvent event = new InventoryClickEvent(player, packet.getSlot(), packet.getActionType(), packet.getButton());
+        InventoryClickEvent event = new InventoryClickEvent(player, player.currentScreenHandler, packet.getSlot(), packet.getActionType(), packet.getButton());
         Quartz.callEvent(event);
         if(event.isCancelled()) {
             player.currentScreenHandler.updateToClient();

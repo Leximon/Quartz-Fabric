@@ -5,22 +5,18 @@ import de.leximon.quartz.api.event.server.ServerStartedEvent;
 import de.leximon.quartz.api.event.server.ServerStartingEvent;
 import de.leximon.quartz.api.event.server.ServerStoppedEvent;
 import de.leximon.quartz.api.event.server.ServerStoppingEvent;
-import de.leximon.quartz.api.item.QBlockItem;
+import de.leximon.quartz.api.inventory.HandledInventory;
 import de.leximon.quartz.testing.AmogusBlock;
-import de.leximon.quartz.testing.AmogusBlockItem;
 import de.leximon.quartz.testing.ExampleBlock;
 import de.leximon.quartz.testing.ExampleBlockEntity;
-import de.leximon.quartz.testing.TestListener;
 import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.kyori.adventure.platform.fabric.FabricServerAudiences;
-import net.kyori.adventure.text.Component;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -52,6 +48,8 @@ public class QuartzInitializer implements DedicatedServerModInitializer {
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> Quartz.callEvent(new ServerStoppingEvent(server)));
         ServerTickEvents.START_SERVER_TICK.register(server -> Quartz.getScheduler().tick(server));
+
+        Quartz.registerEvents(HandledInventory.class);
 
 //        Quartz.registerBlock(id("amogus"), AMOGUS_BLOCK);
 //        Quartz.registerBlock(id("flamethrower"), FLAMETHROWER);

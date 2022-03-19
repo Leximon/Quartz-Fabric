@@ -1,6 +1,5 @@
 package de.leximon.quartz.mixin.classes.block;
 
-import de.leximon.quartz.api.block.QBlock;
 import de.leximon.quartz.api.block.ServersideBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;

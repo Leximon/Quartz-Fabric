@@ -1,7 +1,6 @@
 package de.leximon.quartz.api.event.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 
 public class EntityDeathEvent extends EntityEvent {
