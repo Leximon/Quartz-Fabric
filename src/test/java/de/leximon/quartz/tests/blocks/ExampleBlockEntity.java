@@ -1,6 +1,7 @@
-package de.leximon.quartz.testing;
+package de.leximon.quartz.tests.blocks;
 
 import de.leximon.quartz.QuartzInitializer;
+import de.leximon.quartz.tests.TestInitializer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -32,7 +33,7 @@ public class ExampleBlockEntity extends LootableContainerBlockEntity {
     private int charge = 0;
 
     public ExampleBlockEntity(BlockPos pos, BlockState state) {
-        super(QuartzInitializer.EXAMPLE_BLOCK_ENTITY, pos, state);
+        super(TestInitializer.EXAMPLE_BLOCK_ENTITY, pos, state);
     }
 
     // read and write

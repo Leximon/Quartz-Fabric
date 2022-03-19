@@ -1,4 +1,4 @@
-package de.leximon.quartz.testing;
+package de.leximon.quartz.tests.listeners;
 
 import de.leximon.quartz.QuartzInitializer;
 import de.leximon.quartz.api.Quartz;

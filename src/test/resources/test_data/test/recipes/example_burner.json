@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "test:flamethrower"
+      "item": "quartz_tests:flamethrower"
     },
     {
       "item": "minecraft:coal"

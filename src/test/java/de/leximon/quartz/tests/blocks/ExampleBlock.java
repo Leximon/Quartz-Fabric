@@ -1,7 +1,7 @@
-package de.leximon.quartz.testing;
+package de.leximon.quartz.tests.blocks;
 
-import de.leximon.quartz.QuartzInitializer;
 import de.leximon.quartz.api.block.ServersideBlock;
+import de.leximon.quartz.tests.TestInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -24,7 +24,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -109,17 +108,15 @@ public class ExampleBlock extends BlockWithEntity implements ServersideBlock {
         builder.add(Properties.FACING, Properties.POWERED);
     }
 
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ExampleBlockEntity(pos, state);
     }
 
-    @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if(world.isClient)
             return null;
-        return state.get(Properties.POWERED).booleanValue() ? ExampleBlock.checkType(type, QuartzInitializer.EXAMPLE_BLOCK_ENTITY, ExampleBlockEntity::serverTick) : null;
+        return state.get(Properties.POWERED).booleanValue() ? ExampleBlock.checkType(type, TestInitializer.EXAMPLE_BLOCK_ENTITY, ExampleBlockEntity::serverTick) : null;
     }
 }

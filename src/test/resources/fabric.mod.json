@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "quartz_tests",
+  "version": "${version}",
+
+  "name": "Quartz Tests",
+  "description": "For the testing purposes :smirk:",
+  "authors": [
+    "Leximon"
+  ],
+  "contact": {
+
+  },
+
+  "license": "MIT",
+
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "de.leximon.quartz.tests.TestInitializer"
+    ]
+  },
+  "mixins": [
+    "quartz_tests.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "quartz": "*",
+    "minecraft": "1.18.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

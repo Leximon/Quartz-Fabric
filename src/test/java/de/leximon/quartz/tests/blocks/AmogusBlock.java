@@ -1,4 +1,4 @@
-package de.leximon.quartz.testing;
+package de.leximon.quartz.tests.blocks;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.block.QBlock;
