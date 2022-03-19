@@ -70,7 +70,7 @@ public class ModsCommand {
             }
             i++;
             if(i != mods.size())
-                b.append(Component.text(metadata.getName(), TextColor.color(0x4296f5)).hoverEvent(HoverEvent.showText(metadataText.build())))
+                b.append(Component.text(metadata.getName(), i % 2 == 0 ? TextColor.color(0x80BEF5) : TextColor.color(0x4296f5)).hoverEvent(HoverEvent.showText(metadataText.build())))
                         .append(Component.text(",", NamedTextColor.WHITE));
         }
         context.getSource().sendFeedback(Quartz.adventure().toNative(b.build()), false);
