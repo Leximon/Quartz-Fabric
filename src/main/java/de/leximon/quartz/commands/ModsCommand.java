@@ -14,6 +14,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 
@@ -29,11 +30,11 @@ public class ModsCommand {
     }
 
     private static int listMods(CommandContext<ServerCommandSource> context, boolean all) {
-        Collection<ModContainer> mods = FabricLoader.getInstance().getAllMods();
+        Collection<ModContainer> mods = new ArrayList<>(FabricLoader.getInstance().getAllMods());
         if(!all)
             mods.removeIf(m -> {
-                String name = m.getMetadata().getName();
-                return name.startsWith("fabric-") || name.startsWith("java") || name.startsWith("minecraft");
+                String id = m.getMetadata().getId();
+                return id.startsWith("fabric-") || id.startsWith("java") || id.startsWith("minecraft");
             });
         var b = Component.text()
                 .append(Component.text("Mods ("))
@@ -48,27 +49,27 @@ public class ModsCommand {
                     .append(Component.text(metadata.getId(), NamedTextColor.BLUE))
                     .append(Component.newline());
             metadataText.append(Component.text("Version: ", NamedTextColor.WHITE))
-                    .append(Component.text(metadata.getVersion().getFriendlyString(), NamedTextColor.BLUE))
+                    .append(Component.text(metadata.getVersion().getFriendlyString(), NamedTextColor.GRAY))
                     .append(Component.newline());
 
             var authors = metadata.getAuthors();
             if(authors.size() > 0) {
                 metadataText.append(Component.text(authors.size() == 1 ? "Author: " : "Authors: ", NamedTextColor.WHITE));
-                listed(metadataText, authors, author -> Component.text(author.getName(), NamedTextColor.BLUE));
+                listed(metadataText, authors, author -> Component.text(author.getName(), NamedTextColor.GRAY));
                 metadataText.append(Component.newline());
             }
 
             var license = metadata.getLicense();
             if (license.size() > 0) {
                 metadataText.append(Component.text("License: ", NamedTextColor.WHITE));
-                listed(metadataText, license, ls -> Component.text(ls, NamedTextColor.BLUE));
+                listed(metadataText, license, ls -> Component.text(ls, NamedTextColor.GRAY));
                 metadataText.append(Component.newline());
             }
 
             var dependencies = metadata.getDependencies();
             if(dependencies.size() > 0) {
                 metadataText.append(Component.text("Dependencies: ", NamedTextColor.WHITE));
-                listed(metadataText, dependencies, dep -> Component.text(dep.getModId(), NamedTextColor.BLUE));
+                listed(metadataText, dependencies, dep -> Component.text(dep.getModId(), NamedTextColor.GRAY));
                 metadataText.append(Component.newline());
             }
 
@@ -77,9 +78,9 @@ public class ModsCommand {
                 metadataText.append(Component.text(metadata.getDescription(), NamedTextColor.WHITE));
             }
             i++;
+            b.append(Component.text(metadata.getName(), i % 2 == 0 ? TextColor.color(0x80BEF5) : TextColor.color(0x4296f5)).hoverEvent(HoverEvent.showText(metadataText.build())));
             if(i != mods.size())
-                b.append(Component.text(metadata.getName(), i % 2 == 0 ? TextColor.color(0x80BEF5) : TextColor.color(0x4296f5)).hoverEvent(HoverEvent.showText(metadataText.build())))
-                        .append(Component.text(", ", NamedTextColor.WHITE));
+                b.append(Component.text(", ", NamedTextColor.WHITE));
         }
         context.getSource().sendFeedback(Quartz.adventure().toNative(b.build()), false);
         return 1;
