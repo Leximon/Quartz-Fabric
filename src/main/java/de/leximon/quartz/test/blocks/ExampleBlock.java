@@ -1,11 +1,12 @@
-package de.leximon.quartz.tests.blocks;
+package de.leximon.quartz.test.blocks;
 
 import de.leximon.quartz.api.block.ServersideBlock;
-import de.leximon.quartz.tests.TestInitializer;
+import de.leximon.quartz.test.TestInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -117,6 +118,7 @@ public class ExampleBlock extends BlockWithEntity implements ServersideBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if(world.isClient)
             return null;
+
         return state.get(Properties.POWERED).booleanValue() ? ExampleBlock.checkType(type, TestInitializer.EXAMPLE_BLOCK_ENTITY, ExampleBlockEntity::serverTick) : null;
     }
 }

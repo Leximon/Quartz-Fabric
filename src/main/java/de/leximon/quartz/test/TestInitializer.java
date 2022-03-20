@@ -1,12 +1,13 @@
-package de.leximon.quartz.tests;
+package de.leximon.quartz.test;
 
 import de.leximon.quartz.api.Quartz;
 import de.leximon.quartz.api.item.QBlockItem;
-import de.leximon.quartz.tests.blocks.AmogusBlock;
-import de.leximon.quartz.tests.blocks.AmogusBlockItem;
-import de.leximon.quartz.tests.blocks.ExampleBlock;
-import de.leximon.quartz.tests.blocks.ExampleBlockEntity;
-import de.leximon.quartz.tests.listeners.TestListener;
+
+import de.leximon.quartz.test.blocks.AmogusBlock;
+import de.leximon.quartz.test.blocks.AmogusBlockItem;
+import de.leximon.quartz.test.blocks.ExampleBlock;
+import de.leximon.quartz.test.blocks.ExampleBlockEntity;
+import de.leximon.quartz.test.listeners.TestListener;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.kyori.adventure.text.Component;

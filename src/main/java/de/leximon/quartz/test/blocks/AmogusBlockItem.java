@@ -1,4 +1,4 @@
-package de.leximon.quartz.tests.blocks;
+package de.leximon.quartz.test.blocks;
 
 import de.leximon.quartz.api.block.ServersideBlock;
 import de.leximon.quartz.api.item.QBlockItem;

@@ -13,6 +13,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
+import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,7 +33,7 @@ public class CommandManagerMixin {
             blockArgumentParser.parse(true);
         } catch (CommandSyntaxException ignore) {
         }
-        return blockArgumentParser.getSuggestions(builder, BlockTags.getTagGroup());
+        return blockArgumentParser.getSuggestions(builder, Registry.BLOCK);
     };
     private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS_ITEM = (context, builder) -> {
         StringReader stringReader = new StringReader(builder.getInput());
@@ -42,7 +43,7 @@ public class CommandManagerMixin {
             itemStringReader.consume();
         } catch (CommandSyntaxException ignore) {
         }
-        return itemStringReader.getSuggestions(builder, ItemTags.getTagGroup());
+        return itemStringReader.getSuggestions(builder, Registry.ITEM);
     };
 
     @Inject(method = "argument", at = @At("RETURN"))
