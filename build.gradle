@@ -39,7 +39,7 @@ dependencies {
     include modImplementation("net.kyori:adventure-platform-fabric:5.0.0")
 
     // testing
-    modImplementation files("starlight-1.0.0+fabric.d0a3220.jar")
+//    modImplementation files("starlight-1.0.0+fabric.d0a3220.jar")
     //modImplementation "maven.modrinth:lithium:mc1.18.1-0.7.7"
 //    modImplementation "com.github.2No2Name:McTester:v0.2.3"
 //    modImplementation "com.github.astei:lazydfu:0.1.2"
