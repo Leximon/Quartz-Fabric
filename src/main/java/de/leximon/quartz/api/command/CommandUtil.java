@@ -1,6 +1,5 @@
 package de.leximon.quartz.api.command;
 
-import com.mojang.brigadier.Message;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.server.command.ServerCommandSource;
 
@@ -10,22 +9,27 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class CommandUtil {
 
-    public static <T> SuggestionsBuilder<T> suggestionList(Collection<T> list, Function<T, String> valueProvider) {
-        return new SuggestionsBuilder<>(list, valueProvider);
+    public static <T> SuggestionsBuilder<T> suggestionsList(Supplier<Collection<T>> listSupplier, Function<T, String> valueProvider) {
+        return new SuggestionsBuilder<>(() -> listSupplier.get().stream(), valueProvider);
+    }
+
+    public static <T> SuggestionsBuilder<T> suggestionsStream(Supplier<Stream<T>> streamSupplier, Function<T, String> valueProvider) {
+        return new SuggestionsBuilder<>(streamSupplier, valueProvider);
     }
 
     public static class SuggestionsBuilder<T> {
-        private final Collection<T> list;
+        private final Supplier<Stream<T>> streamSupplier;
         private final Function<T, String> valueProvider;
         private Comparator<T> comparator;
         private Function<T, String> tooltipProvider;
         private BiPredicate<T, String> filter;
-        public SuggestionsBuilder(Collection<T> list, Function<T, String> valueProvider) {
-            this.list = list;
+        public SuggestionsBuilder(Supplier<Stream<T>> streamSupplier, Function<T, String> valueProvider) {
+            this.streamSupplier = streamSupplier;
             this.valueProvider = valueProvider;
             this.filter = (v, input) -> valueProvider.apply(v).toLowerCase(Locale.ROOT).startsWith(input.toLowerCase(Locale.ROOT));
         }
@@ -57,7 +61,7 @@ public class CommandUtil {
         public SuggestionProvider<ServerCommandSource> build() {
             return (context, builder) -> {
                 String input = builder.getInput().substring(builder.getStart());
-                Stream<T> stream = list.stream()
+                Stream<T> stream = streamSupplier.get()
                         .filter(v -> filter.test(v, input));
                 if(comparator != null)
                     stream = stream.sorted(comparator);
