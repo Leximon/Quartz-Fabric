@@ -6,6 +6,7 @@ import de.leximon.quartz.QuartzInitializer;
 import de.leximon.quartz.api.event.Event;
 import de.leximon.quartz.api.event.EventHandler;
 import de.leximon.quartz.api.scheduler.Scheduler;
+import de.leximon.quartz.api.world.WorldBuilder;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.kyori.adventure.platform.fabric.FabricServerAudiences;
@@ -63,6 +64,10 @@ public class Quartz {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static WorldBuilder registerWorld(Identifier id) {
+        return new WorldBuilder(id);
     }
 
     public static ServerScoreboard createNewScoreboard() {

@@ -58,6 +58,7 @@ public class CommandUtil {
             return this;
         }
 
+        @CheckReturnValue
         public SuggestionProvider<ServerCommandSource> build() {
             return (context, builder) -> {
                 String input = builder.getInput().substring(builder.getStart());
