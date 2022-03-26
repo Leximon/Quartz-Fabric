@@ -1,6 +1,9 @@
 package de.leximon.quartz.api.command;
 
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import de.leximon.quartz.api.Quartz;
+import net.kyori.adventure.text.Component;
 import net.minecraft.server.command.ServerCommandSource;
 
 import javax.annotation.CheckReturnValue;
@@ -20,6 +23,14 @@ public class CommandUtil {
 
     public static <T> SuggestionsBuilder<T> suggestionsStream(Supplier<Stream<T>> streamSupplier, Function<T, String> valueProvider) {
         return new SuggestionsBuilder<>(streamSupplier, valueProvider);
+    }
+
+    public static void sendFeedback(CommandContext<ServerCommandSource> context, Component message) {
+        sendFeedback(context, message, false);
+    }
+
+    public static void sendFeedback(CommandContext<ServerCommandSource> context, Component message, boolean broadcastToOps) {
+        context.getSource().sendFeedback(Quartz.adventure().toNative(message), broadcastToOps);
     }
 
     public static class SuggestionsBuilder<T> {
