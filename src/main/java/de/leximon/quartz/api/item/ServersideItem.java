@@ -2,6 +2,8 @@ package de.leximon.quartz.api.item;
 
 import de.leximon.quartz.api.Quartz;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,8 +25,8 @@ public interface ServersideItem {
             Component name = getDisplayName(player);
             boolean hasCustomName = display.contains("Name") || name == null;
             if(!hasCustomName)
-                display.putString("Name", Text.Serializer.toJson(
-                        Quartz.adventure().toNative(name).copy().styled(s -> !s.isItalic() ? s.withItalic(false) : s)
+                display.putString("Name", GsonComponentSerializer.gson().serialize(
+                        name.applyFallbackStyle(s -> s.decoration(TextDecoration.ITALIC, false))
                 ));
             display.putBoolean("hasCustomName", hasCustomName);
             original.put("display", display);

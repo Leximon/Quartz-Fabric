@@ -20,9 +20,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,6 +48,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     @Shadow protected abstract void incrementScreenHandlerSyncId();
 
     @Shadow private int screenHandlerSyncId;
+
+    @Shadow @Final public ServerPlayerInteractionManager interactionManager;
+
+    @Shadow public abstract boolean changeGameMode(GameMode gameMode);
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -102,5 +109,15 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     @Inject(method = "onScreenHandlerOpened", at = @At("HEAD"))
     private void injectOnInventoryOpen(ScreenHandler screenHandler, CallbackInfo ci) {
         Quartz.callEvent(new InventoryOpenEvent((ServerPlayerEntity) (Object) this, screenHandler));
+    }
+
+    @Override
+    public GameMode getGameMode() {
+        return interactionManager.getGameMode();
+    }
+
+    @Override
+    public boolean setGameMode(GameMode gameMode) {
+        return changeGameMode(gameMode);
     }
 }

@@ -6,6 +6,7 @@ import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.Component;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.world.GameMode;
 
 public interface PlayerUtil extends ForwardingAudience.Single {
 
@@ -20,4 +21,8 @@ public interface PlayerUtil extends ForwardingAudience.Single {
     void openInventory(HandledInventory inventory);
 
     int nextScreenHandlerSyncId();
+
+    GameMode getGameMode();
+
+    boolean setGameMode(GameMode gameMode);
 }

@@ -4,6 +4,7 @@
   "package": "de.leximon.quartz.mixin.classes",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "block.WorldChunkMixin",
     "event.entity.LivingEntityMixin",
     "miscellaneous.MinecraftServerAccessor"
   ],

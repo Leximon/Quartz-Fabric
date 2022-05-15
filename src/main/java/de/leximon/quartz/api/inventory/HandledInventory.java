@@ -68,6 +68,20 @@ public abstract class HandledInventory implements Inventory, NamedScreenHandlerF
         this.markDirty();
     }
 
+    public void setStackMutable(int slot, ItemStack stack) {
+        inventory.set(slot, stack);
+        if (stack.getCount() > this.getMaxCountPerStack()) {
+            stack.setCount(this.getMaxCountPerStack());
+        }
+
+        this.markDirty();
+    }
+
+    public void fill(ItemStack stack) {
+        for (int i = 0; i < size(); i++)
+            setStack(i, stack);
+    }
+
     @Override
     public void markDirty() {}
 

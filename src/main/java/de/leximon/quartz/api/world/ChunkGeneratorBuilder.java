@@ -95,7 +95,7 @@ public class ChunkGeneratorBuilder {
                     structures.add(entry.getKey(), entry.getValue(), Lifecycle.experimental());
 
             FlatChunkGeneratorConfig config = new FlatChunkGeneratorConfig(Optional.of(RegistryEntryList.of(structureRegistryList)), biomeRegistry);
-            config.setBiome(RegistryEntry.of(biomeRegistry.get(biome)));
+            config.setBiome(biomeRegistry.getOrCreateEntry(biome));
             for (FlatChunkGeneratorLayer layer : layers)
                 config.getLayers().add(layer);
             config.updateLayerBlocks();

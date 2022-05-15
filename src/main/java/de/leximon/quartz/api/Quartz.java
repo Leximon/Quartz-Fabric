@@ -7,6 +7,7 @@ import de.leximon.quartz.api.event.Event;
 import de.leximon.quartz.api.event.EventHandler;
 import de.leximon.quartz.api.scheduler.Scheduler;
 import de.leximon.quartz.api.world.WorldBuilder;
+import de.leximon.quartz.mixin.classes.miscellaneous.MinecraftServerAccessor;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.kyori.adventure.platform.fabric.FabricServerAudiences;
@@ -16,8 +17,11 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,16 +33,18 @@ public class Quartz {
     private static final Scheduler SCHEDULER = new Scheduler();
     private static final Multimap<Class<?>, Method> listeners = HashMultimap.create();
 
-    public static void registerBlock(Identifier id, Block block) {
+    public static <B extends Block> B registerBlock(Identifier id, B block) {
         Registry.register(Registry.BLOCK, id, block);
+        return block;
     }
 
     public static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(Identifier id, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
         return Registry.register(Registry.BLOCK_ENTITY_TYPE, id, FabricBlockEntityTypeBuilder.create(factory, blocks).build(null));
     }
 
-    public static void registerItem(Identifier id, Item item) {
+    public static <I extends Item> I registerItem(Identifier id, I item) {
         Registry.register(Registry.ITEM, id, item);
+        return item;
     }
 
     public static void registerEvents(Class<?> listener) {
@@ -68,6 +74,14 @@ public class Quartz {
 
     public static WorldBuilder registerWorld(Identifier id) {
         return new WorldBuilder(id);
+    }
+
+    public static ServerWorld getWorld(Identifier id) {
+        for (java.util.Map.Entry<RegistryKey<World>, ServerWorld> entry : ((MinecraftServerAccessor) Quartz.getServer()).getWorldMap().entrySet()) {
+            if (entry.getKey().getValue().equals(id))
+                return entry.getValue();
+        }
+        return null;
     }
 
     public static ServerScoreboard createNewScoreboard() {
